@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>ToDo LIst</title>
+</head>
+<style>
+h1 {
+	font-size: 18pt;
+	font-weight: bold;
+	color: gray;
+}
+
+body {
+	font-size: 13pt;
+	color: gray;
+	margin: 5px 25px;
+}
+
+tr {
+	margin: 5px;
+}
+
+th {
+	padding: 5px;
+	color: white;
+	background: darkgray;
+}
+
+td {
+	padding: 5px;
+	color: black;
+	background: #f0f0f0;
+}
+
+.err {
+	color: red;
+}
+</style>
+
+
+  <body>
+	<h1 th:text="#{content.title}">Hello page</h1>
+	<p th:text="${msg}"></p>
+	<table>
+	<form method="post" action="/" th:object="${formModel}">
+	
+		
+	<div class="col-md-3">
+    <select id="jobId" name="jobId">
+        <option th:each="obj : ${datalist}" th:value="${obj.id}" th:selected="${obj.id == id}" th:inline="text">[[${obj.name}]]</option>
+    </select>
+</div>
+		<tr><td><label for="name">やること</label></td>
+			<td><input type="text" name="name"
+				th:value="*{name}" th:errorclass="err" />
+			<div th:if="${#fields.hasErrors('name')}" 
+				th:errors="*{name}" th:errorclass="err">
+				</div></td></tr>
+		 <input type="date"></input>
+				<tr><td><label for="memo">メモ</label></td>
+			<td><textarea name="memo" th:text="*{memo}" 
+				cols="20" rows="5" ></textarea></td></tr>
+		<tr><td></td><td><input type="submit" /></td></tr>
+	</form>
+	</table>
+	<hr/>
+		<table>
+		<tr>
+			<th>ID</th>
+			<th>やること</th>
+			<th>メモ</th>
+		</tr>
+		<tr th:each="obj : ${datalist}">
+			<td th:text="${obj.id}"></td>
+			<td th:text="${obj.name}"></td>
+			<td th:text="${obj.memo}"></td>
+		</tr>
+	</table>
+</body>
